@@ -20,7 +20,6 @@ class MapViewController: BaseViewController {
     }
     
     func setRegion() {
-        
         if let region = viewModel.region {
             mapView.setRegion(region, animated: true)
         }

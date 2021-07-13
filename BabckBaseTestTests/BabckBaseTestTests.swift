@@ -39,6 +39,10 @@ class BabckBaseTestTests: XCTestCase {
             XCTAssertEqual(viewModel.cities?.value[0].country, "IN")
             viewModel.searchCities(with: "Go")
             XCTAssertTrue(((viewModel.cities?.value[0].name.hasPrefix("Go")) != nil))
+            viewModel.searchCities(with: "122")
+            XCTAssertTrue(viewModel.cities?.value.count == 0)
+            viewModel.searchCities(with: "")
+            XCTAssertTrue(viewModel.cities?.value.count == viewModel.allCities?.count)
         }
         
     }
@@ -53,11 +57,6 @@ class BabckBaseTestTests: XCTestCase {
         
         let art = Artwork(title: "asfdsa", coordinate: CLLocationCoordinate2D(latitude: 111, longitude: 222) )
         XCTAssertNotNil(art)
-        
-        let mapcontroller =  MapViewController(nibName: MapViewController.name, bundle: nil)
-        mapcontroller.viewModel = viewmodel
-        XCTAssertNotNil(mapcontroller)
-        
     }
     
     func testCityModel() {
@@ -72,7 +71,6 @@ class BabckBaseTestTests: XCTestCase {
         XCTAssertEqual(city.id, 1234)
         XCTAssertEqual(city.coord.lat, 14.222)
         XCTAssertEqual(city.coord.lon, 12.3333)
-
         XCTAssertEqual(city.location.coordinate.latitude, 14.222)
 
     }
@@ -104,7 +102,6 @@ class BabckBaseTestTests: XCTestCase {
             switch result {
             case .failure(let error):
                 XCTAssertEqual(error, AppError.jsonParsingFailed)
-
             default: break
             }
         }
